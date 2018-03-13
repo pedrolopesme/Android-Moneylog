@@ -22,14 +22,13 @@ public class TransactionsContract {
 
         public static final String TABLE_NAME = "transactions";
 
-        public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_AMOUNT = "amount";
         public static final String COLUMN_LATITUDE = "latitude";
         public static final String COLUMN_LONGITUDE = "longitude";
         public static final String COLUMN_PLACE = "place";
         public static final String COLUMN_CREATED_AT = "created_at";
-        
+
         public static Uri buildUriWithId(long id) {
             return CONTENT_URI.buildUpon()
                     .appendPath(String.valueOf(id))
