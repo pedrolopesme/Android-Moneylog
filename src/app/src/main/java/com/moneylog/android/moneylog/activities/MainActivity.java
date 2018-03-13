@@ -1,7 +1,9 @@
-package com.moneylog.android.moneylog;
+package com.moneylog.android.moneylog.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.moneylog.android.moneylog.R;
 
 public class MainActivity extends AppCompatActivity {
 
