@@ -19,7 +19,7 @@ public class TransactionsDBHelper extends SQLiteOpenHelper {
     public TransactionsDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-    
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_TX_TABLE =
@@ -30,7 +30,7 @@ public class TransactionsDBHelper extends SQLiteOpenHelper {
                         TransactionEntry.COLUMN_LATITUDE + " REAL, " +
                         TransactionEntry.COLUMN_LONGITUDE + " REAL, " +
                         TransactionEntry.COLUMN_PLACE + " TEXT, " +
-                        TransactionEntry.COLUMN_CREATED_AT + " INTEGER NOT NULL");
+                        TransactionEntry.COLUMN_CREATED_AT + " INTEGER NOT NULL)";
 
         db.execSQL(SQL_CREATE_TX_TABLE);
     }
