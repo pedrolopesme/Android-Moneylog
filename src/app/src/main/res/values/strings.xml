@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MoneyLog</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_transaction">Transaction</string>
+    <string name="tv_amount">Amount</string>
+    <string name="tv_place">Place</string>
 </resources>

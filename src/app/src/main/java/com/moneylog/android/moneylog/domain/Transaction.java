@@ -112,7 +112,7 @@ public class Transaction implements Parcelable {
         dest.writeString(this.name);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeParcelable(this.place, flags);
-        dest.writeValue(this.amount);
+        dest.writeSerializable(this.amount);
         dest.writeParcelable(this.location, flags);
         dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
     }
@@ -126,13 +126,13 @@ public class Transaction implements Parcelable {
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : TxType.values()[tmpType];
         this.place = in.readParcelable(Place.class.getClassLoader());
-        this.amount = (Double) in.readValue(Double.class.getClassLoader());
+        this.amount = (Double) in.readSerializable();
         this.location = in.readParcelable(Location.class.getClassLoader());
         long tmpCreatedAt = in.readLong();
         this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
     }
 
-    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+    public static final Parcelable.Creator<Transaction> CREATOR = new Parcelable.Creator<Transaction>() {
         @Override
         public Transaction createFromParcel(Parcel source) {
             return new Transaction(source);
