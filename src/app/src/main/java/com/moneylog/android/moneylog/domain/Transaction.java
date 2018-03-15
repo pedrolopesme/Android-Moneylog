@@ -19,7 +19,7 @@ public class Transaction implements Parcelable {
     private String name;
     private TxType type;
     private Place place;
-    private BigDecimal amount;
+    private Double amount;
     private Location location = new Location();
     private Date createdAt = new Date();
 
@@ -47,11 +47,11 @@ public class Transaction implements Parcelable {
         this.type = type;
     }
 
-    public BigDecimal getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -112,7 +112,7 @@ public class Transaction implements Parcelable {
         dest.writeString(this.name);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeParcelable(this.place, flags);
-        dest.writeSerializable(this.amount);
+        dest.writeValue(this.amount);
         dest.writeParcelable(this.location, flags);
         dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
     }
@@ -126,13 +126,13 @@ public class Transaction implements Parcelable {
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : TxType.values()[tmpType];
         this.place = in.readParcelable(Place.class.getClassLoader());
-        this.amount = (BigDecimal) in.readSerializable();
+        this.amount = (Double) in.readValue(Double.class.getClassLoader());
         this.location = in.readParcelable(Location.class.getClassLoader());
         long tmpCreatedAt = in.readLong();
         this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
     }
 
-    public static final Parcelable.Creator<Transaction> CREATOR = new Parcelable.Creator<Transaction>() {
+    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
         @Override
         public Transaction createFromParcel(Parcel source) {
             return new Transaction(source);
