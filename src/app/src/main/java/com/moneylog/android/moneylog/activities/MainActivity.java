@@ -9,6 +9,7 @@ import android.view.View;
 import com.moneylog.android.moneylog.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         addTransaction.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MoneyLog</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="content_authority">com.moneylog.android.moneylog</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_transaction">Transaction</string>
     <string name="tv_amount">Amount</string>

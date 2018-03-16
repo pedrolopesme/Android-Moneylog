@@ -18,8 +18,8 @@ public class Transaction implements Parcelable {
     private long id;
     private String name;
     private TxType type;
-    private Place place;
     private Double amount;
+    private Place place = new Place();
     private Location location = new Location();
     private Date createdAt = new Date();
 

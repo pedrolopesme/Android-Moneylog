@@ -34,7 +34,6 @@ public class ContentProviderTransactionDao extends ContentProviderBaseDao implem
     @Override
     public void insert(Transaction transaction) {
         ContentValues values = new ContentValues();
-        values.put(TransactionEntry._ID, transaction.getId());
         values.put(TransactionEntry.COLUMN_NAME, transaction.getName());
         values.put(TransactionEntry.COLUMN_AMOUNT, transaction.getAmount());
         values.put(TransactionEntry.COLUMN_LATITUDE, transaction.getLatitude());

@@ -3,19 +3,21 @@ package com.moneylog.android.moneylog.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.TransactionDao;
 import com.moneylog.android.moneylog.domain.Transaction;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
@@ -26,12 +28,13 @@ import timber.log.Timber;
  * Use the {@link AddTransactionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddTransactionFragment extends Fragment {
+public class AddTransactionFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private final BaseDaoFactory daoFactory;
+
+    private BaseDaoFactory daoFactory;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -40,7 +43,7 @@ public class AddTransactionFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     @BindView(R.id.fab_save_transaction)
-    FloatingActionButton mSaveTransaction;
+    Button mSaveTransaction;
 
     @BindView(R.id.tv_transaction)
     TextInputEditText mTvTransactionName;
@@ -52,7 +55,7 @@ public class AddTransactionFragment extends Fragment {
     TextInputEditText mTvPlace;
 
     public AddTransactionFragment() {
-        daoFactory = new BaseDaoFactory(getActivity().getApplicationContext().getContentResolver());
+
     }
 
     /**
@@ -76,24 +79,27 @@ public class AddTransactionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        daoFactory = new BaseDaoFactory(getActivity().getApplicationContext().getContentResolver());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        mSaveTransaction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveTransaction();
-            }
-        });
+        if (BuildConfig.DEBUG)
+            Timber.plant(new Timber.DebugTree());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_transaction, container, false);
+
+        Timber.i("Creating fragment view");
+
+        View view = inflater.inflate(R.layout.fragment_add_transaction, container, false);
+        ButterKnife.bind(this, view);
+
+        ((Button) view.findViewById(R.id.fab_save_transaction)).setOnClickListener(this);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -120,6 +126,16 @@ public class AddTransactionFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        Timber.i("Handling onclick button");
+        switch (v.getId()) {
+            case R.id.fab_save_transaction:
+                saveTransaction();
+                break;
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -135,22 +151,25 @@ public class AddTransactionFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void saveTransaction(){
+    public void saveTransaction() {
         try {
+            Timber.i("Trying to save transaction");
             Transaction tx = buildTransaction();
             final TransactionDao transactionDao = daoFactory.getTransactionDao();
             transactionDao.insert(tx);
-        } catch (Exception ex){
+            Timber.i("Transaction saved: " + tx);
+        } catch (Exception ex) {
             Timber.e("It was impossible to save transaction");
             Timber.e(ex);
         }
     }
 
-    public Transaction buildTransaction(){
+    public Transaction buildTransaction() {
         Transaction tx = null;
-        try{
+        try {
+            Timber.i("Building transaction");
             String name = mTvTransactionName.getText().toString();
-            Double amount =  Double.valueOf(mTvAmount.getText().toString());
+            Double amount = Double.valueOf(mTvAmount.getText().toString());
             String place = mTvTransactionName.getText().toString();
             // TODO : get lat log
             Double latitude = 0.0;
@@ -162,7 +181,7 @@ public class AddTransactionFragment extends Fragment {
             tx.setPlaceName(place);
             tx.setLatitude(latitude);
             tx.setLongitude(longitude);
-        } catch(Exception ex){
+        } catch (Exception ex) {
             Timber.e("It was impossible to build transaction");
             Timber.e(ex);
         }
