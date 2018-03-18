@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
 import com.moneylog.android.moneylog.domain.Transaction;
+import com.moneylog.android.moneylog.utils.DateUtil;
+import com.moneylog.android.moneylog.utils.NumberUtil;
 
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
 
     @Override
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
-        Timber.d("Executing onBindViewHolder for position #" + position);
+        Timber.d("Executing onBindViewHolder for position #%d", position);
         Transaction transaction = transactions.get(position);
         holder.render(transaction);
     }
@@ -81,6 +83,15 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
         @BindView(R.id.transaction_item_name)
         TextView mTransactionName;
 
+        @BindView(R.id.transaction_item_amount)
+        TextView mTransactionAmount;
+
+        @BindView(R.id.transaction_item_date)
+        TextView mTransactionDate;
+
+        @BindView(R.id.bg_transaction_type)
+        View mTransactionType;
+
         TransactionViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -94,7 +105,7 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
                 Transaction transaction = transactions.get(getAdapterPosition());
                 if (transaction != null) {
                     mOnClickListener.onTransactionItemClick(transaction);
-                    Timber.d("View Holder clicked on transaction " + transaction);
+                    Timber.d("View Holder clicked on transaction %s", transaction);
                 }
             }
         }
@@ -105,8 +116,15 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
          * @param transaction
          */
         public void render(Transaction transaction) {
-            Timber.d("Rendering transaction " + transaction);
+            Timber.d("Rendering transaction %s", transaction);
             mTransactionName.setText(transaction.getName());
+            mTransactionAmount.setText(String.format("$ %s", NumberUtil.stringify(transaction.getAmount())));
+            mTransactionDate.setText(DateUtil.format(transaction.getCreatedAt(), "MM/dd"));
+
+            if (transaction.getAmount() >= 0)
+                mTransactionType.setBackgroundResource(R.drawable.bg_tx_income);
+            else
+                mTransactionType.setBackgroundResource(R.drawable.bg_tx_debt);
         }
 
 
