@@ -4,7 +4,8 @@
     <string name="content_authority">com.moneylog.android.moneylog</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_transaction">Transaction</string>
-    <string name="tv_amount">Amount</string>
+    <string name="tv_amount">$</string>
     <string name="tv_place">Place</string>
     <string name="remove_transaction">Remove Transaction</string>
+    <string name="btn_save">SAVE</string>
 </resources>

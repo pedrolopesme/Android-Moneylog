@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
@@ -20,13 +21,13 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
- *  Add Transaction Fragment
+ * Add Transaction Fragment
  */
 public class AddTransactionFragment extends Fragment implements View.OnClickListener {
 
     private BaseDaoFactory daoFactory;
 
-    @BindView(R.id.fab_save_transaction)
+    @BindView(R.id.button_save_transaction)
     Button mSaveTransaction;
 
     @BindView(R.id.tv_transaction)
@@ -37,6 +38,9 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
     @BindView(R.id.tv_place)
     TextInputEditText mTvPlace;
+
+    @BindView(R.id.ms_transaction_type)
+    MaterialSpinner mTransactionType;
 
     public AddTransactionFragment() {
 
@@ -60,7 +64,15 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         View view = inflater.inflate(R.layout.fragment_add_transaction, container, false);
         ButterKnife.bind(this, view);
 
-        Button saveTx = ((Button) view.findViewById(R.id.fab_save_transaction));
+        mTransactionType.setItems("Debt", "Income");
+        mTransactionType.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                Timber.i("Clicked " + item);
+            }
+        });
+
+        Button saveTx = ((Button) view.findViewById(R.id.button_save_transaction));
         saveTx.setOnClickListener(this);
         return view;
     }
@@ -79,7 +91,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         Timber.i("Handling onclick button");
         switch (v.getId()) {
-            case R.id.fab_save_transaction:
+            case R.id.button_save_transaction:
                 saveTransaction();
                 break;
         }
