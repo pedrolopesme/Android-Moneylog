@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
@@ -12,6 +13,8 @@ import com.moneylog.android.moneylog.domain.Transaction;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
@@ -75,9 +78,13 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
      */
     class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.transaction_item_name)
+        TextView mTransactionName;
+
         TransactionViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
             Timber.i("View Holder Created");
         }
 
@@ -98,8 +105,8 @@ public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<Transac
          * @param transaction
          */
         public void render(Transaction transaction) {
-            // TODO: Code to render a transaction
             Timber.d("Rendering transaction " + transaction);
+            mTransactionName.setText(transaction.getName());
         }
 
 

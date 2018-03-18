@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!-- Color Palette -->
+    <color name="blue_300">#0f6b75</color>
+    <color name="blue_500">#0F4375</color>
+    <color name="blue_700">#092A4A</color>
+    <color name="yellow_a200">#F5C852</color>
+
+    <!-- Text specific palette -->
+    <color name="title">#000000</color>
+    <color name="description">#666666</color>
+
+    <color name="colorPrimary">@color/blue_500</color>
+    <color name="colorPrimaryDark">@color/blue_700</color>
+    <color name="colorAccent">@color/yellow_a200</color>
 </resources>
