@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moneylog.android.moneylog.R;
@@ -93,22 +94,47 @@ public class TransactionRecyclerViewAdapter extends
         @BindView(R.id.bg_transaction_type)
         View mTransactionType;
 
+        @BindView(R.id.ib_delete)
+        ImageView mIbDelete;
+
         TransactionViewHolder(final View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+
+            if (getAdapterPosition() >= 0)
+
+
+                itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
+            deleteOnClick();
             Timber.i("View Holder Created");
         }
 
+        /**
+         * Configuring onClick on viewholder item
+         *
+         * @param v
+         */
         @Override
         public void onClick(final View v) {
-            if (transactions != null) {
-                Transaction transaction = transactions.get(getAdapterPosition());
-                if (transaction != null) {
-                    mOnClickListener.onTransactionItemClick(transaction);
-                    Timber.d("View Holder clicked on transaction %s", transaction);
-                }
+            Transaction transaction = transactions.get(getAdapterPosition());
+            if (transactions != null && transaction != null) {
+                mOnClickListener.onTransactionItemClick(transaction);
+                Timber.d("View Holder clicked on transaction %s", transaction);
             }
+        }
+
+        /**
+         * Configuring onClick on delete imageView
+         */
+        public void deleteOnClick() {
+            mIbDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Transaction transaction = transactions.get(getAdapterPosition());
+                    mOnClickListener.onTransactionItemDeleteClick(transaction);
+                    Timber.d("Delete button clicked for transaction " + transaction);
+                }
+            });
         }
 
         /**

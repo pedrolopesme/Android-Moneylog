@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.DaoFactory;
 import com.moneylog.android.moneylog.fragments.ListTransactionsFragment;
@@ -24,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TransactionListChangedClickListener {
 
     @BindView(R.id.tv_toolbar_date)
     TextView tvToolbarDate;
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void createFragment() {
         Timber.i("Creating Transaction List Fragment");
-        Fragment fragment = new ListTransactionsFragment();
+        ListTransactionsFragment fragment = new ListTransactionsFragment();
+        fragment.setListChangedClickListener(this);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.list_transactions_fragment, fragment);
@@ -79,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
      * Render toolbar
      */
     private void renderToolbar() {
-
         DaoFactory daoFactory = new BaseDaoFactory(getContentResolver());
         final double transactionsAmount = daoFactory.getTransactionDao().getTransactionAmount();
 
@@ -88,4 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void listChanged() {
+        renderToolbar();
+    }
 }

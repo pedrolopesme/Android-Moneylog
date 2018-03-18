@@ -7,4 +7,6 @@ import com.moneylog.android.moneylog.domain.Transaction;
  */
 public interface TransactionItemClickListener {
     void onTransactionItemClick(final Transaction transaction);
+
+    void onTransactionItemDeleteClick(final Transaction transaction);
 }

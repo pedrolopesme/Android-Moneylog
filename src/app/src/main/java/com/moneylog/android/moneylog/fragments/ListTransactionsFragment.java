@@ -15,6 +15,7 @@ import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.adapters.TransactionRecyclerViewAdapter;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
+import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.TransactionDao;
 import com.moneylog.android.moneylog.domain.Transaction;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
- *  Add Transaction Fragment
+ * Add Transaction Fragment
  */
 public class ListTransactionsFragment extends Fragment implements TransactionItemClickListener {
 
@@ -39,6 +40,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
     // Layout manager
     private LinearLayoutManager layoutManager;
 
+    private TransactionListChangedClickListener listChangedClickListener;
 
     public ListTransactionsFragment() {
 
@@ -91,6 +93,19 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
         Timber.i("Item clicked %s", transaction);
     }
 
+    @Override
+    public void onTransactionItemDeleteClick(Transaction transaction) {
+        if (transaction != null) {
+            Timber.i("Deleting transaction %s", transaction);
+            final TransactionDao transactionDao = daoFactory.getTransactionDao();
+            transactionDao.delete(transaction.getId());
+            refreshTransactionList();
+
+            if (listChangedClickListener != null)
+                listChangedClickListener.listChanged();
+        }
+    }
+
     /**
      * Refreshes transaction list
      */
@@ -101,4 +116,11 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
         mTransactionRecyclerViewAdapter.setTransactions(transactions);
     }
 
+    public TransactionListChangedClickListener getListChangedClickListener() {
+        return listChangedClickListener;
+    }
+
+    public void setListChangedClickListener(TransactionListChangedClickListener listChangedClickListener) {
+        this.listChangedClickListener = listChangedClickListener;
+    }
 }
