@@ -13,7 +13,7 @@ import com.moneylog.android.moneylog.fragments.AddTransactionFragment;
 
 import timber.log.Timber;
 
-public class AddTransactionActivity extends AppCompatActivity implements AddTransactionFragment.OnFragmentInteractionListener {
+public class AddTransactionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,6 @@ public class AddTransactionActivity extends AppCompatActivity implements AddTran
 
         setContentView(R.layout.activity_add_transaction);
         openFragment();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
     }
 
     private void openFragment() {
