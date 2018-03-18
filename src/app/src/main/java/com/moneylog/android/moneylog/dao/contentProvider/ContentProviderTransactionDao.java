@@ -56,7 +56,7 @@ public class ContentProviderTransactionDao extends ContentProviderBaseDao implem
                 null,
                 null,
                 null,
-                null);
+                TransactionEntry.COLUMN_CREATED_AT + " DESC");
 
         List<Transaction> transactions = new ArrayList<>();
         if (cursor != null) {
