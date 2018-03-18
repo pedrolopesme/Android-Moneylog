@@ -8,16 +8,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.dao.BaseDaoFactory;
+import com.moneylog.android.moneylog.dao.DaoFactory;
 import com.moneylog.android.moneylog.fragments.ListTransactionsFragment;
+import com.moneylog.android.moneylog.utils.DateUtil;
+import com.moneylog.android.moneylog.utils.NumberUtil;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.tv_toolbar_date)
+    TextView tvToolbarDate;
+
+    @BindView(R.id.tv_toolbar_account_summary)
+    TextView tvToolbarAccountSummary;
 
     @BindView(R.id.fab_add_transaction)
     FloatingActionButton addTransaction;
@@ -34,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         createFragment();
         setAddTransactionOnClick();
-
+        renderToolbar();
     }
 
     /**
@@ -53,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sets add transaction on click listener
      */
-    private void setAddTransactionOnClick(){
+    private void setAddTransactionOnClick() {
         addTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Render toolbar
+     */
+    private void renderToolbar() {
+
+        DaoFactory daoFactory = new BaseDaoFactory(getContentResolver());
+        final double transactionsAmount = daoFactory.getTransactionDao().getTransactionAmount();
+
+        tvToolbarDate.setText(DateUtil.format(new Date(), "MMM - YYYY"));
+        tvToolbarAccountSummary.setText(String.format("$ %s", NumberUtil.stringify(transactionsAmount)));
     }
 
 

@@ -15,4 +15,5 @@ public interface TransactionDao {
 
     List<Transaction> getTransactions();
 
+    double getTransactionAmount();
 }

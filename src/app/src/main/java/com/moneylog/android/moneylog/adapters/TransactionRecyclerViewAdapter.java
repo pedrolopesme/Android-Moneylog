@@ -22,7 +22,8 @@ import timber.log.Timber;
 /**
  * Transaction Recycler View Adapter
  */
-public class TransactionRecyclerViewAdapter extends RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionViewHolder> {
+public class TransactionRecyclerViewAdapter extends
+        RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionViewHolder> {
 
     // Transactions
     private List<Transaction> transactions = null;
