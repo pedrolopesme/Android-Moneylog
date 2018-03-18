@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_item_transaction"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:orientation="horizontal">
+
+    <View
+        android:layout_width="6dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:background="@color/line_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"/>
+
+    <View
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/bg_tx_debt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/transaction_item_name"
         style="@style/TransactionItemName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/transaction_item_amount"
+        style="@style/TransactionItemAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transaction_item_name" />
+
+    <TextView
+        android:id="@+id/transaction_item_date"
+        style="@style/TransactionItemDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/transaction_item_amount"
+        app:layout_constraintTop_toBottomOf="@+id/transaction_item_name" />
+
+    <ImageView
+        android:id="@+id/ib_delete"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/remove_transaction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:selectableItemBackground"
+        app:srcCompat="@android:drawable/presence_offline" />
+
 
 </android.support.constraint.ConstraintLayout>

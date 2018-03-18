@@ -46,9 +46,23 @@
     </style>
 
     <style name="TransactionItemName">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="TransactionItemAmount">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="TransactionItemDate">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/description</item>
         <item name="android:layout_marginRight">24dp</item>
     </style>
 
