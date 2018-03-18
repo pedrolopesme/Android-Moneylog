@@ -31,7 +31,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.add_transaction_fragment, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
