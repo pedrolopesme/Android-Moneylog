@@ -68,7 +68,7 @@ public class ContentProviderTransactionDao extends ContentProviderBaseDao implem
                 Double latitude = cursor.getDouble(cursor.getColumnIndex(TransactionEntry.COLUMN_LATITUDE));
                 Double longitude = cursor.getDouble(cursor.getColumnIndex(TransactionEntry.COLUMN_LONGITUDE));
                 String place = cursor.getString(cursor.getColumnIndex(TransactionEntry.COLUMN_PLACE));
-                Date createdAt = DateUtil.decode(cursor.getString(cursor.getColumnIndex(TransactionEntry.COLUMN_PLACE)));
+                Date createdAt = DateUtil.decode(cursor.getString(cursor.getColumnIndex(TransactionEntry.COLUMN_CREATED_AT)));
 
                 Transaction transaction = new Transaction();
                 transaction.setId(id);
