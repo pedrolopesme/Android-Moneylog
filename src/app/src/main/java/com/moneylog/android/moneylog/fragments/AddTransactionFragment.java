@@ -15,6 +15,7 @@ import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.TransactionDao;
 import com.moneylog.android.moneylog.domain.Transaction;
+import com.moneylog.android.moneylog.domain.TransactionType;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,8 @@ public class AddTransactionFragment extends Fragment {
 
     @BindView(R.id.ms_transaction_type)
     MaterialSpinner mTransactionType;
+
+    private TransactionType selectedTxType = TransactionType.DEBT;
 
     public AddTransactionFragment() {
     }
@@ -65,11 +68,12 @@ public class AddTransactionFragment extends Fragment {
     }
 
     private void renderTransactionType() {
-        mTransactionType.setItems("Debt", "Income");
+        mTransactionType.setItems(TransactionType.DEBT.getType(),
+                TransactionType.INCOME.getType());
         mTransactionType.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Timber.i("Clicked " + item);
+                selectedTxType = TransactionType.getType(item);
             }
         });
     }
@@ -104,6 +108,10 @@ public class AddTransactionFragment extends Fragment {
             String name = mTvTransactionName.getText().toString();
             Double amount = Double.valueOf(mTvAmount.getText().toString());
             String place = mTvTransactionName.getText().toString();
+
+            if (selectedTxType != null && selectedTxType.equals(TransactionType.DEBT))
+                amount *= -1;
+
             // TODO : get lat log
             Double latitude = 0.0;
             Double longitude = 0.0;

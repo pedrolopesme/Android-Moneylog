@@ -11,13 +11,10 @@ import java.util.Date;
  */
 public class Transaction implements Parcelable {
 
-    private enum TxType {
-        INCOME, DEBT
-    }
 
     private long id;
     private String name;
-    private TxType type;
+    private TransactionType type;
     private Double amount;
     private Place place = new Place();
     private Location location = new Location();
@@ -39,11 +36,11 @@ public class Transaction implements Parcelable {
         this.name = name;
     }
 
-    public TxType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(TxType type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
@@ -124,7 +121,7 @@ public class Transaction implements Parcelable {
         this.id = in.readLong();
         this.name = in.readString();
         int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : TxType.values()[tmpType];
+        this.type = tmpType == -1 ? null : TransactionType.values()[tmpType];
         this.place = in.readParcelable(Place.class.getClassLoader());
         this.amount = (Double) in.readSerializable();
         this.location = in.readParcelable(Location.class.getClassLoader());
