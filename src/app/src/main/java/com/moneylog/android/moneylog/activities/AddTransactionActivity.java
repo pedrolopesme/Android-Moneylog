@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,14 +30,26 @@ public class AddTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
 
         setContentView(R.layout.activity_add_transaction);
-        openFragment();
-
         ButterKnife.bind(this);
+
+        openFragment();
         addTransactionOnClickListener();
+        renderToolbar();
+    }
+
+    private void renderToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_transaction_toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void openFragment() {
@@ -56,5 +70,11 @@ public class AddTransactionActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
