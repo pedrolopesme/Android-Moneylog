@@ -94,4 +94,10 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
     public void listChanged() {
         renderToolbar();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createFragment();
+    }
 }
