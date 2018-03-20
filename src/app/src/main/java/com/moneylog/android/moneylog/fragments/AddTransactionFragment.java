@@ -23,12 +23,9 @@ import timber.log.Timber;
 /**
  * Add Transaction Fragment
  */
-public class AddTransactionFragment extends Fragment implements View.OnClickListener {
+public class AddTransactionFragment extends Fragment {
 
     private BaseDaoFactory daoFactory;
-
-    @BindView(R.id.button_save_transaction)
-    Button mSaveTransaction;
 
     @BindView(R.id.tv_transaction)
     TextInputEditText mTvTransactionName;
@@ -43,7 +40,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     MaterialSpinner mTransactionType;
 
     public AddTransactionFragment() {
-
     }
 
     @Override
@@ -64,6 +60,11 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         View view = inflater.inflate(R.layout.fragment_add_transaction, container, false);
         ButterKnife.bind(this, view);
 
+        renderTransactionType();
+        return view;
+    }
+
+    private void renderTransactionType() {
         mTransactionType.setItems("Debt", "Income");
         mTransactionType.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
@@ -71,10 +72,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 Timber.i("Clicked " + item);
             }
         });
-
-        Button saveTx = ((Button) view.findViewById(R.id.button_save_transaction));
-        saveTx.setOnClickListener(this);
-        return view;
     }
 
     @Override
@@ -85,16 +82,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void onClick(View v) {
-        Timber.i("Handling onclick button");
-        switch (v.getId()) {
-            case R.id.button_save_transaction:
-                saveTransaction();
-                break;
-        }
     }
 
     public void saveTransaction() {
