@@ -99,5 +99,6 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
     protected void onResume() {
         super.onResume();
         createFragment();
+        renderToolbar();
     }
 }
