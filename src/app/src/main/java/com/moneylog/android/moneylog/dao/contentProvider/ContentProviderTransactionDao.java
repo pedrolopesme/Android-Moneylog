@@ -86,14 +86,5 @@ public class ContentProviderTransactionDao extends ContentProviderBaseDao implem
         return transactions;
     }
 
-    @Override
-    public double getTransactionAmount() {
-        double amount = 0.0;
-
-        for (Transaction tx : getTransactions())
-            amount += tx.getAmount();
-
-        return amount;
-    }
 
 }

@@ -14,6 +14,4 @@ public interface TransactionDao {
     void delete(final long transactionId);
 
     List<Transaction> getTransactions();
-
-    double getTransactionAmount();
 }

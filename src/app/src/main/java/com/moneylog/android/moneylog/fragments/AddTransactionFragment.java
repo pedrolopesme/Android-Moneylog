@@ -8,13 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
-import com.moneylog.android.moneylog.dao.TransactionDao;
 import com.moneylog.android.moneylog.domain.Transaction;
 import com.moneylog.android.moneylog.domain.TransactionType;
 
@@ -27,7 +26,7 @@ import timber.log.Timber;
  */
 public class AddTransactionFragment extends Fragment {
 
-    private BaseDaoFactory daoFactory;
+    private TransactionBusiness transactionBusiness;
 
     @BindView(R.id.tv_transaction_layout)
     TextInputLayout mTvTransactionNameLayout;
@@ -55,7 +54,7 @@ public class AddTransactionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        daoFactory = new BaseDaoFactory(getActivity().getApplicationContext().getContentResolver());
+        transactionBusiness = new TransactionBusiness(new BaseDaoFactory(getActivity().getApplicationContext().getContentResolver()));
 
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
@@ -100,8 +99,7 @@ public class AddTransactionFragment extends Fragment {
             Timber.i("Trying to save transaction");
             if (validate()) {
                 Transaction tx = buildTransaction();
-                final TransactionDao transactionDao = daoFactory.getTransactionDao();
-                transactionDao.insert(tx);
+                transactionBusiness.insert(tx);
                 Timber.i("Transaction saved: %s", tx);
                 return true;
             }
@@ -137,9 +135,6 @@ public class AddTransactionFragment extends Fragment {
             Double amount = Double.valueOf(mTvAmount.getText().toString());
             String place = mTvPlace.getText().toString();
 
-            if (selectedTxType != null && selectedTxType.equals(TransactionType.DEBT))
-                amount *= -1;
-
             // TODO : get lat log
             Double latitude = 0.0;
             Double longitude = 0.0;
@@ -150,6 +145,7 @@ public class AddTransactionFragment extends Fragment {
             tx.setPlaceName(place);
             tx.setLatitude(latitude);
             tx.setLongitude(longitude);
+            tx.setType(selectedTxType);
         } catch (Exception ex) {
             Timber.e("It was impossible to build transaction");
             Timber.e(ex);

@@ -2,14 +2,12 @@ package com.moneylog.android.moneylog.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
@@ -22,7 +20,6 @@ import com.moneylog.android.moneylog.domain.Transaction;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 

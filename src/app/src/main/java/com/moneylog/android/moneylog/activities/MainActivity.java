@@ -3,7 +3,6 @@ package com.moneylog.android.moneylog.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +11,9 @@ import android.widget.TextView;
 
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
-import com.moneylog.android.moneylog.dao.DaoFactory;
 import com.moneylog.android.moneylog.fragments.ListTransactionsFragment;
 import com.moneylog.android.moneylog.utils.DateUtil;
 import com.moneylog.android.moneylog.utils.NumberUtil;
@@ -27,6 +26,8 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements TransactionListChangedClickListener {
 
+    private TransactionBusiness transactionBusiness;
+
     @BindView(R.id.tv_toolbar_date)
     TextView tvToolbarDate;
 
@@ -36,9 +37,11 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
     @BindView(R.id.fab_add_transaction)
     FloatingActionButton addTransaction;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        transactionBusiness = new TransactionBusiness(new BaseDaoFactory(getContentResolver()));
 
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
@@ -82,9 +85,7 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
      * Render toolbar
      */
     private void renderToolbar() {
-        DaoFactory daoFactory = new BaseDaoFactory(getContentResolver());
-        final double transactionsAmount = daoFactory.getTransactionDao().getTransactionAmount();
-
+        final double transactionsAmount = transactionBusiness.getTransactionAmount();
         tvToolbarDate.setText(DateUtil.format(new Date(), "MMM - YYYY"));
         tvToolbarAccountSummary.setText(String.format("$ %s", NumberUtil.stringify(transactionsAmount)));
     }
