@@ -65,8 +65,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         mBtnAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fragment != null) {
-                    fragment.saveTransaction();
+                if (fragment != null && fragment.saveTransaction()) {
                     onBackPressed();
                 }
             }

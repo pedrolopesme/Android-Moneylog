@@ -3,6 +3,7 @@ package com.moneylog.android.moneylog.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,14 @@ public class AddTransactionFragment extends Fragment {
 
     private BaseDaoFactory daoFactory;
 
+    @BindView(R.id.tv_transaction_layout)
+    TextInputLayout mTvTransactionNameLayout;
+
     @BindView(R.id.tv_transaction)
     TextInputEditText mTvTransactionName;
+
+    @BindView(R.id.tv_amount_layout)
+    TextInputLayout mTvAmountLayout;
 
     @BindView(R.id.tv_amount)
     TextInputEditText mTvAmount;
@@ -88,17 +95,38 @@ public class AddTransactionFragment extends Fragment {
         super.onDetach();
     }
 
-    public void saveTransaction() {
+    public boolean saveTransaction() {
         try {
             Timber.i("Trying to save transaction");
-            Transaction tx = buildTransaction();
-            final TransactionDao transactionDao = daoFactory.getTransactionDao();
-            transactionDao.insert(tx);
-            Timber.i("Transaction saved: %s", tx);
+            if (validate()) {
+                Transaction tx = buildTransaction();
+                final TransactionDao transactionDao = daoFactory.getTransactionDao();
+                transactionDao.insert(tx);
+                Timber.i("Transaction saved: %s", tx);
+                return true;
+            }
         } catch (Exception ex) {
             Timber.e("It was impossible to save transaction");
             Timber.e(ex);
         }
+        return false;
+    }
+
+    public boolean validate() {
+
+        boolean validated = true;
+
+        if (mTvTransactionName.getText().toString().trim().isEmpty()) {
+            mTvTransactionNameLayout.setError(getString(R.string.error_required));
+            validated = false;
+        }
+
+        if (mTvAmount.getText().toString().trim().isEmpty()) {
+            mTvAmountLayout.setError(getString(R.string.error_required));
+            validated = false;
+        }
+
+        return validated;
     }
 
     public Transaction buildTransaction() {
@@ -107,7 +135,7 @@ public class AddTransactionFragment extends Fragment {
             Timber.i("Building transaction");
             String name = mTvTransactionName.getText().toString();
             Double amount = Double.valueOf(mTvAmount.getText().toString());
-            String place = mTvTransactionName.getText().toString();
+            String place = mTvPlace.getText().toString();
 
             if (selectedTxType != null && selectedTxType.equals(TransactionType.DEBT))
                 amount *= -1;
