@@ -9,4 +9,6 @@
     <string name="remove_transaction">Remove Transaction</string>
     <string name="btn_save">SAVE</string>
     <string name="error_required">Required</string>
+    <string name="balance_positive">Congratulations, your account turned green!</string>
+    <string name="balance_negative">Ooops.. your account turned red.</string>
 </resources>

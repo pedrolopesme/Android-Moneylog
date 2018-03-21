@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.activities.MainActivity;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.domain.Transaction;
@@ -99,7 +100,11 @@ public class AddTransactionFragment extends Fragment {
             Timber.i("Trying to save transaction");
             if (validate()) {
                 Transaction tx = buildTransaction();
-                transactionBusiness.insert(tx);
+                transactionBusiness.insertAndNotifyStatusChanging(tx,
+                        getContext(),
+                        MainActivity.class,
+                        getString(R.string.balance_positive),
+                        getString(R.string.balance_negative));
                 Timber.i("Transaction saved: %s", tx);
                 return true;
             }

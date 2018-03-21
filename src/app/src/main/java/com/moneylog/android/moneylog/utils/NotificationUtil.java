@@ -14,7 +14,7 @@ import com.moneylog.android.moneylog.R;
  */
 public class NotificationUtil {
 
-    public void openNotification(Context context, Class<?> activity, String title, String message) {
+    public static void openNotification(Context context, Class<?> activity, String title, String message) {
 
         Intent intent = new Intent(context, activity);
         PendingIntent contentIntent = PendingIntent.getActivity(context,
