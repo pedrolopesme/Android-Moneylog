@@ -67,6 +67,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (fragment != null) {
                     fragment.saveTransaction();
+                    onBackPressed();
                 }
             }
         });
