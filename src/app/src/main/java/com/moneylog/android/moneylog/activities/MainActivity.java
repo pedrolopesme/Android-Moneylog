@@ -23,6 +23,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+import widgets.MoneyLogWidgetService;
 
 public class MainActivity extends AppCompatActivity implements TransactionListChangedClickListener {
 
@@ -94,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
     @Override
     public void listChanged() {
         renderToolbar();
+        addToWidget();
+    }
+
+    public void addToWidget() {
+        Timber.i("Updating account balance on widget ");
+        MoneyLogWidgetService.startActionUpdateBalance(getApplicationContext());
     }
 
     @Override
@@ -101,5 +108,6 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
         super.onResume();
         createFragment();
         renderToolbar();
+        addToWidget();
     }
 }

@@ -18,6 +18,7 @@ import com.moneylog.android.moneylog.fragments.AddTransactionFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+import widgets.MoneyLogWidgetService;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
@@ -76,4 +77,5 @@ public class AddTransactionActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
 }

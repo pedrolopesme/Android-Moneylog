@@ -38,7 +38,7 @@
         <item name="android:layout_marginRight">24dp</item>
     </style>
 
-    <style name="ToolbarAccountSummary">
+    <style name="ToolbarAccountBalance">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:layout_marginBottom">24dp</item>

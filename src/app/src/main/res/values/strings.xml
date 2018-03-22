@@ -11,4 +11,6 @@
     <string name="error_required">Required</string>
     <string name="balance_positive">Congratulations, your account turned green!</string>
     <string name="balance_negative">Ooops.. your account turned red.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
