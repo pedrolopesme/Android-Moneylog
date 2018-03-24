@@ -16,6 +16,7 @@ import com.moneylog.android.moneylog.activities.MainActivity;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.domain.Transaction;
+import com.moneylog.android.moneylog.domain.TransactionLocation;
 import com.moneylog.android.moneylog.domain.TransactionType;
 
 import butterknife.BindView;
@@ -48,6 +49,8 @@ public class AddTransactionFragment extends Fragment {
     MaterialSpinner mTransactionType;
 
     private TransactionType selectedTxType = TransactionType.DEBT;
+
+    private TransactionLocation transactionLocation = null;
 
     public AddTransactionFragment() {
     }
@@ -140,9 +143,13 @@ public class AddTransactionFragment extends Fragment {
             Double amount = Double.valueOf(mTvAmount.getText().toString());
             String place = mTvPlace.getText().toString();
 
-            // TODO : get lat log
             Double latitude = 0.0;
             Double longitude = 0.0;
+
+            if(transactionLocation != null){
+                latitude = transactionLocation.getLatitude();
+                longitude = transactionLocation.getLongitude();
+            }
 
             tx = new Transaction();
             tx.setName(name);
@@ -156,5 +163,9 @@ public class AddTransactionFragment extends Fragment {
             Timber.e(ex);
         }
         return tx;
+    }
+
+    public void setTransactionLocation(TransactionLocation transactionLocation) {
+        this.transactionLocation = transactionLocation;
     }
 }

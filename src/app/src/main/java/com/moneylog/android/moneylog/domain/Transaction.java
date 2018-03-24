@@ -3,7 +3,6 @@ package com.moneylog.android.moneylog.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -17,7 +16,7 @@ public class Transaction implements Parcelable {
     private TransactionType type;
     private Double amount;
     private Place place = new Place();
-    private Location location = new Location();
+    private TransactionLocation transactionLocation = new TransactionLocation();
     private Date createdAt = new Date();
 
     public long getId() {
@@ -53,19 +52,19 @@ public class Transaction implements Parcelable {
     }
 
     public Double getLatitude() {
-        return location.getLatitude();
+        return transactionLocation.getLatitude();
     }
 
     public void setLatitude(Double latitude) {
-        location.setLatitude(latitude);
+        transactionLocation.setLatitude(latitude);
     }
 
     public Double getLongitude() {
-        return location.getLongitude();
+        return transactionLocation.getLongitude();
     }
 
     public void setLongitude(Double longitude) {
-        location.setLongitude(longitude);
+        transactionLocation.setLongitude(longitude);
     }
 
     public String getPlaceName() {
@@ -92,7 +91,7 @@ public class Transaction implements Parcelable {
                 ", type=" + type +
                 ", place=" + place +
                 ", amount=" + amount +
-                ", location=" + location +
+                ", transactionLocation=" + transactionLocation +
                 ", createdAt=" + createdAt +
                 '}';
     }
@@ -110,7 +109,7 @@ public class Transaction implements Parcelable {
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeParcelable(this.place, flags);
         dest.writeSerializable(this.amount);
-        dest.writeParcelable(this.location, flags);
+        dest.writeParcelable(this.transactionLocation, flags);
         dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
     }
 
@@ -124,7 +123,7 @@ public class Transaction implements Parcelable {
         this.type = tmpType == -1 ? null : TransactionType.values()[tmpType];
         this.place = in.readParcelable(Place.class.getClassLoader());
         this.amount = (Double) in.readSerializable();
-        this.location = in.readParcelable(Location.class.getClassLoader());
+        this.transactionLocation = in.readParcelable(TransactionLocation.class.getClassLoader());
         long tmpCreatedAt = in.readLong();
         this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
     }

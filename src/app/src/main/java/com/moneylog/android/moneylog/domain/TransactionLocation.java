@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Location domain class
+ * TransactionLocation domain class
  */
-public class Location implements Parcelable {
+public class TransactionLocation implements Parcelable {
 
     private Double latitude;
     private Double longitude;
@@ -29,7 +29,7 @@ public class Location implements Parcelable {
 
     @Override
     public String toString() {
-        return "Location{" +
+        return "TransactionLocation{" +
                 "latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
@@ -46,23 +46,23 @@ public class Location implements Parcelable {
         dest.writeValue(this.longitude);
     }
 
-    public Location() {
+    public TransactionLocation() {
     }
 
-    protected Location(Parcel in) {
+    protected TransactionLocation(Parcel in) {
         this.latitude = (Double) in.readValue(Double.class.getClassLoader());
         this.longitude = (Double) in.readValue(Double.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Location> CREATOR = new Parcelable.Creator<Location>() {
+    public static final Parcelable.Creator<TransactionLocation> CREATOR = new Parcelable.Creator<TransactionLocation>() {
         @Override
-        public Location createFromParcel(Parcel source) {
-            return new Location(source);
+        public TransactionLocation createFromParcel(Parcel source) {
+            return new TransactionLocation(source);
         }
 
         @Override
-        public Location[] newArray(int size) {
-            return new Location[size];
+        public TransactionLocation[] newArray(int size) {
+            return new TransactionLocation[size];
         }
     };
 }

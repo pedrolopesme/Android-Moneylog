@@ -17,6 +17,7 @@ import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.fragments.ListTransactionsFragment;
 import com.moneylog.android.moneylog.utils.DateUtil;
 import com.moneylog.android.moneylog.utils.NumberUtil;
+import com.moneylog.android.moneylog.utils.PermissionsUtils;
 
 import java.util.Date;
 
