@@ -20,4 +20,8 @@
     <color name="line_bg">#E3E3E3</color>
     <color name="income_bg">#5BBC93</color>
     <color name="debt_bg">#D0011B</color>
+
+    <!-- Widget -->
+    <color name="widget_text">#ffffff</color>
+    <color name="widget_bg">#44000000</color>
 </resources>

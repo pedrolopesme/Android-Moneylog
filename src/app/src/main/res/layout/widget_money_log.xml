@@ -1,44 +1,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
+    android:background="@color/widget_bg"
     android:orientation="horizontal"
-    android:padding="@dimen/widget_margin">
-
-    <Button
-        android:id="@+id/btn_widget_add_transaction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="11dp"
-        android:text="Button" />
+    android:padding="@dimen/widget_margin"
+    android:baselineAligned="false"
+    android:weightSum="4">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="4dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_widget_add_transaction"
+            style="@style/WidgetBtn"
+            android:text="@string/widget_plus" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:layout_margin="8dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/widget_balance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="#09C"
             android:contentDescription="@string/appwidget_text"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textAlignment="textEnd"
+            style="@style/WidgetAccountBalance"/>
 
         <TextView
             android:id="@+id/widget_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="#09C"
             android:contentDescription="@string/appwidget_text"
-            android:textColor="#ffffff"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textAlignment="textEnd"
+            style="@style/WidgetAccountDate"
+         />
     </LinearLayout>
 
 </LinearLayout>
