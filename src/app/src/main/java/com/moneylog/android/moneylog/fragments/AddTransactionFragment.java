@@ -9,6 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
@@ -18,6 +26,7 @@ import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.domain.Transaction;
 import com.moneylog.android.moneylog.domain.TransactionLocation;
 import com.moneylog.android.moneylog.domain.TransactionType;
+import com.moneylog.android.moneylog.utils.PermissionsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +57,11 @@ public class AddTransactionFragment extends Fragment {
     @BindView(R.id.ms_transaction_type)
     MaterialSpinner mTransactionType;
 
+    @BindView(R.id.transaction_map)
+    MapView mMapView;
+
+    private GoogleMap googleMap;
+
     private TransactionType selectedTxType = TransactionType.DEBT;
 
     private TransactionLocation transactionLocation = null;
@@ -74,6 +88,7 @@ public class AddTransactionFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         renderTransactionType();
+        createMap(savedInstanceState);
         return view;
     }
 
@@ -84,6 +99,28 @@ public class AddTransactionFragment extends Fragment {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 selectedTxType = TransactionType.getType(item);
+            }
+        });
+    }
+
+    private void createMap(Bundle savedInstanceState) {
+        Timber.i("Creating MAP");
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                Timber.i("Map is ready");
+                googleMap = mMap;
+                googleMap.getUiSettings().setAllGesturesEnabled(false);
+                setMapLocation();
             }
         });
     }
@@ -146,7 +183,7 @@ public class AddTransactionFragment extends Fragment {
             Double latitude = 0.0;
             Double longitude = 0.0;
 
-            if(transactionLocation != null){
+            if (transactionLocation != null) {
                 latitude = transactionLocation.getLatitude();
                 longitude = transactionLocation.getLongitude();
             }
@@ -167,5 +204,43 @@ public class AddTransactionFragment extends Fragment {
 
     public void setTransactionLocation(TransactionLocation transactionLocation) {
         this.transactionLocation = transactionLocation;
+        setMapLocation();
+    }
+
+    private void setMapLocation() {
+        Timber.e("Setting Map Location");
+        if (transactionLocation != null && googleMap != null) {
+            // For dropping a marker at a point on the Map
+            LatLng currLocation = new LatLng(transactionLocation.getLatitude(), transactionLocation.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(currLocation));
+
+            // For zooming automatically to the location of the marker
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(currLocation).zoom(12).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }

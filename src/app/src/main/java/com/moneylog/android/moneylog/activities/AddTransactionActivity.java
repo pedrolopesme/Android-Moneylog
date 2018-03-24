@@ -107,7 +107,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                     });
         }
     }
-    
+
     public void setLocation(Location location) {
         Timber.i("Location registered %s", location);
         if (location != null) {
