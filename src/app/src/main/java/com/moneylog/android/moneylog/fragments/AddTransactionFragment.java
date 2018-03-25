@@ -85,6 +85,22 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
 
     private DaoFactory daoFactory;
 
+    private TextWatcher tvPlacesWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            Timber.i("Text changed %s ", s.toString());
+            refreshPlaceSuggestions(s.toString());
+        }
+    };
+
     public AddTransactionFragment() {
     }
 
@@ -297,21 +313,11 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
     }
 
     private void setupPlacesSuggestion() {
-        mTvPlace.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        mTvPlace.addTextChangedListener(tvPlacesWatcher);
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Timber.i("Text changed %s ", s.toString());
-                refreshPlaceSuggestions(s.toString());
-            }
-        });
+    private void clearPlacesSuggestionWatcher() {
+        mTvPlace.removeTextChangedListener(tvPlacesWatcher);
     }
 
     public void refreshPlaceSuggestions(String query) {
@@ -335,10 +341,14 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
             @Override
             public void run() {
                 if (suggestions != null && suggestions.size() > 0) {
-
                     mSuggestionsListWrapper.setVisibility(View.VISIBLE);
+
+                    // Limiting to just 3 records
+                    List<String> suggestionsList =
+                            (suggestions.size() > 3) ? suggestions.subList(0, 3) : suggestions;
+
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                            R.layout.item_suggestion, suggestions.subList(0, 3)); // Limiting to just 3 records
+                            R.layout.item_suggestion, suggestionsList);
 
                     mSuggestionsList.setAdapter(adapter);
                 }
@@ -350,8 +360,9 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String place = suggestions.get(position);
+                clearPlacesSuggestionWatcher();
                 mTvPlace.setText(place);
-                mSuggestionsListWrapper.setVisibility(View.GONE);
+                setupPlacesSuggestion();
             }
         });
     }
