@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,7 +19,6 @@ import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.fragments.ListTransactionsFragment;
 import com.moneylog.android.moneylog.utils.DateUtil;
 import com.moneylog.android.moneylog.utils.NumberUtil;
-import com.moneylog.android.moneylog.utils.PermissionsUtils;
 
 import java.util.Date;
 
@@ -29,7 +27,7 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 import widgets.MoneyLogWidgetService;
 
-public class MainActivity extends AppCompatActivity implements TransactionListChangedClickListener {
+public class MainActivity extends BaseActivity implements TransactionListChangedClickListener {
 
     private TransactionBusiness transactionBusiness;
 

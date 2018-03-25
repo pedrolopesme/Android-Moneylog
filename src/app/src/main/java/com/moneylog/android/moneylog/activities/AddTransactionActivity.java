@@ -1,27 +1,24 @@
 package com.moneylog.android.moneylog.activities;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.data.ConnectivityReceiver;
 import com.moneylog.android.moneylog.domain.TransactionLocation;
 import com.moneylog.android.moneylog.fragments.AddTransactionFragment;
 import com.moneylog.android.moneylog.utils.PermissionsUtils;
@@ -29,12 +26,15 @@ import com.moneylog.android.moneylog.utils.PermissionsUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
-import widgets.MoneyLogWidgetService;
 
-public class AddTransactionActivity extends AppCompatActivity {
+public class AddTransactionActivity extends BaseActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     @BindView(R.id.btn_add_transaction)
     Button mBtnAddTransaction;
+
+
+    @BindView(R.id.add_transaction_coordinator_layout)
+    CoordinatorLayout rootLayout;
 
     private AddTransactionFragment fragment;
 
@@ -56,7 +56,10 @@ public class AddTransactionActivity extends AppCompatActivity {
         renderToolbar();
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        BaseActivity.getInstance().setConnectivityListener(this);
         getUserLocation();
+
+        mInstance = this;
     }
 
     private void renderToolbar() {
@@ -118,5 +121,30 @@ public class AddTransactionActivity extends AppCompatActivity {
             txLocation.setLongitude(location.getLongitude());
             fragment.setTransactionLocation(txLocation);
         }
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = getString(R.string.connected);
+            color = Color.WHITE;
+        } else {
+            message = getString(R.string.no_connection);
+            color = Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar
+                .make(rootLayout, message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
     }
 }

@@ -113,7 +113,6 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
         daoFactory = new BaseDaoFactory(contentResolver, apiKey);
         transactionBusiness = new TransactionBusiness(daoFactory);
 
-
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
     }
@@ -165,33 +164,6 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
             }
         });
     }
-
-//    private void setupGooglePlaces() {
-//        SupportPlaceAutocompleteFragment autocompleteFragment =
-//                (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-//
-//
-//
-//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-//            @Override
-//            public void onPlaceSelected(Place place) {
-//                Timber.i("Place: %s", place.getName());
-//
-////                String placeDetailsStr = place.getName() + "\n"
-////                        + place.getId() + "\n"
-////                        + place.getLatLng().toString() + "\n"
-////                        + place.getAddress() + "\n"
-////                        + place.getAttributions();
-//                mTvPlace.setText(place.getName());
-//            }
-//
-//            @Override
-//            public void onError(Status status) {
-//                // TODO: Handle the error.
-//                Timber.e("An error occurred: %s", status);
-//            }
-//        });
-//    }
 
     @Override
     public void onAttach(Context context) {
@@ -347,7 +319,7 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
                     List<String> suggestionsList =
                             (suggestions.size() > 3) ? suggestions.subList(0, 3) : suggestions;
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             R.layout.item_suggestion, suggestionsList);
 
                     mSuggestionsList.setAdapter(adapter);

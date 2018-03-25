@@ -39,14 +39,6 @@ public class PlaceSuggestionsAsyncTask extends AsyncTask<PlaceSuggestionSearch, 
                     queryString.getLatitude(),
                     queryString.getLongitude());
 
-            Timber.i("FOUND %s SUGGESTIONS ", suggestions.size());
-
-            String allSug = "";
-            for(String su : suggestions)
-                allSug += " - _"+ su;
-
-            Timber.i("SUGGESTIONS : %s", allSug);
-
             fragment.renderPlaceSuggestions(suggestions);
             return true;
         } catch (Exception ex) {
