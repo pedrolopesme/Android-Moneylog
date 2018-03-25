@@ -14,4 +14,15 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="widget_plus">+</string>
+    <string name="suggestions_title">PLACE SUGGESTIONS</string>
+
+
+    <!-- GOOGLE MAPS API KEY.
+     PS: SENSITIVE DATA, DO NOT COMMIT IT IN A PUBLIC REPO -->
+    <string name="config_google_maps_key">ENTER YOUR KEY HERE</string>
+
+    <!-- GOOGLE PLACES API KEY.
+    PS: SENSITIVE DATA, DO NOT COMMIT IT IN A PUBLIC REPO -->
+    <string name="config_google_places_key">ENTER YOUR KEY HERE</string>
+    
 </resources>

@@ -1,5 +1,6 @@
 package com.moneylog.android.moneylog.fragments;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.adapters.TransactionRecyclerViewAdapter;
+import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
@@ -46,7 +48,10 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        daoFactory = new BaseDaoFactory(getActivity().getApplicationContext().getContentResolver());
+
+        ContentResolver contentResolver = getActivity().getApplicationContext().getContentResolver();
+        String apiKey = getString(R.string.config_google_maps_key);
+        daoFactory = new BaseDaoFactory(contentResolver, apiKey);
 
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());

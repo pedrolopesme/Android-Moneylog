@@ -97,4 +97,15 @@
         <item name="android:textColor">@color/widget_text</item>
     </style>
 
+    <style name="PlaceSuggestionTitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/description</item>
+    </style>
+
+    <style name="PlaceSuggestionItem">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
 </resources>

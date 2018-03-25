@@ -1,13 +1,20 @@
 package com.moneylog.android.moneylog.fragments;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,12 +28,16 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.activities.MainActivity;
+import com.moneylog.android.moneylog.asyncTasks.PlaceSuggestionsAsyncTask;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
+import com.moneylog.android.moneylog.dao.DaoFactory;
+import com.moneylog.android.moneylog.domain.PlaceSuggestionSearch;
 import com.moneylog.android.moneylog.domain.Transaction;
 import com.moneylog.android.moneylog.domain.TransactionLocation;
 import com.moneylog.android.moneylog.domain.TransactionType;
-import com.moneylog.android.moneylog.utils.PermissionsUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +46,7 @@ import timber.log.Timber;
 /**
  * Add Transaction Fragment
  */
-public class AddTransactionFragment extends Fragment {
+public class AddTransactionFragment extends Fragment implements PlaceSuggestionsFragment {
 
     private TransactionBusiness transactionBusiness;
 
@@ -60,11 +71,19 @@ public class AddTransactionFragment extends Fragment {
     @BindView(R.id.transaction_map)
     MapView mMapView;
 
+    @BindView(R.id.transaction_suggestions_list)
+    ListView mSuggestionsList;
+
+    @BindView(R.id.transaction_suggestions_list_wrapper)
+    LinearLayout mSuggestionsListWrapper;
+
     private GoogleMap googleMap;
 
     private TransactionType selectedTxType = TransactionType.DEBT;
 
     private TransactionLocation transactionLocation = null;
+
+    private DaoFactory daoFactory;
 
     public AddTransactionFragment() {
     }
@@ -72,7 +91,12 @@ public class AddTransactionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        transactionBusiness = new TransactionBusiness(new BaseDaoFactory(getActivity().getApplicationContext().getContentResolver()));
+
+        ContentResolver contentResolver = getActivity().getApplicationContext().getContentResolver();
+        String apiKey = getString(R.string.config_google_places_key);
+        daoFactory = new BaseDaoFactory(contentResolver, apiKey);
+        transactionBusiness = new TransactionBusiness(daoFactory);
+
 
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
@@ -89,6 +113,7 @@ public class AddTransactionFragment extends Fragment {
 
         renderTransactionType();
         createMap(savedInstanceState);
+        setupPlacesSuggestion();
         return view;
     }
 
@@ -124,6 +149,33 @@ public class AddTransactionFragment extends Fragment {
             }
         });
     }
+
+//    private void setupGooglePlaces() {
+//        SupportPlaceAutocompleteFragment autocompleteFragment =
+//                (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+//
+//
+//
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(Place place) {
+//                Timber.i("Place: %s", place.getName());
+//
+////                String placeDetailsStr = place.getName() + "\n"
+////                        + place.getId() + "\n"
+////                        + place.getLatLng().toString() + "\n"
+////                        + place.getAddress() + "\n"
+////                        + place.getAttributions();
+//                mTvPlace.setText(place.getName());
+//            }
+//
+//            @Override
+//            public void onError(Status status) {
+//                // TODO: Handle the error.
+//                Timber.e("An error occurred: %s", status);
+//            }
+//        });
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -242,5 +294,65 @@ public class AddTransactionFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    private void setupPlacesSuggestion() {
+        mTvPlace.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Timber.i("Text changed %s ", s.toString());
+                refreshPlaceSuggestions(s.toString());
+            }
+        });
+    }
+
+    public void refreshPlaceSuggestions(String query) {
+        Timber.d("Refreshing place suggestions with %s ", query);
+        mSuggestionsListWrapper.setVisibility(View.GONE);
+
+        if (query != null && query.trim().length() >= 3 & transactionLocation != null) {
+            PlaceSuggestionSearch search = new PlaceSuggestionSearch(query,
+                    transactionLocation.getLatitude(),
+                    transactionLocation.getLongitude());
+
+            new PlaceSuggestionsAsyncTask(this, daoFactory).execute(search);
+        }
+    }
+
+    @Override
+    public void renderPlaceSuggestions(final List<String> suggestions) {
+        Timber.d("Rendering place suggestions with %s ", suggestions);
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (suggestions != null && suggestions.size() > 0) {
+
+                    mSuggestionsListWrapper.setVisibility(View.VISIBLE);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                            R.layout.item_suggestion, suggestions.subList(0, 3)); // Limiting to just 3 records
+
+                    mSuggestionsList.setAdapter(adapter);
+                }
+            }
+        });
+
+
+        mSuggestionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String place = suggestions.get(position);
+                mTvPlace.setText(place);
+                mSuggestionsListWrapper.setVisibility(View.GONE);
+            }
+        });
     }
 }

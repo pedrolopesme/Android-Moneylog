@@ -1,5 +1,6 @@
 package com.moneylog.android.moneylog.activities;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        transactionBusiness = new TransactionBusiness(new BaseDaoFactory(getContentResolver()));
+        ContentResolver contentResolver = getContentResolver();
+        String apiKey = getString(R.string.config_google_maps_key);
+        transactionBusiness = new TransactionBusiness(new BaseDaoFactory(contentResolver, apiKey));
 
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());

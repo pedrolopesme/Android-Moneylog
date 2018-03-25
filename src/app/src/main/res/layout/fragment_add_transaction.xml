@@ -83,6 +83,30 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <LinearLayout
+        android:id="@+id/transaction_suggestions_list_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tv_place_layout">
+
+        <TextView
+            android:id="@+id/transaction_suggestions_title"
+            style="@style/PlaceSuggestionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/suggestions_title" />
+
+        <ListView
+            android:id="@+id/transaction_suggestions_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
+
+    </LinearLayout>
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/transaction_map"
         android:layout_width="fill_parent"
@@ -94,6 +118,6 @@
         android:enabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_place_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/transaction_suggestions_list_wrapper" />
 
 </android.support.constraint.ConstraintLayout>

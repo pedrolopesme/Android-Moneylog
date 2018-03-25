@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 
 import com.moneylog.android.moneylog.BuildConfig;
+import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.DaoFactory;
@@ -54,7 +55,8 @@ public class MoneyLogWidgetService extends IntentService {
         Timber.i("Handling update balance action");
         final Cursor cursor = null;
         try {
-            DaoFactory daoFactory = new BaseDaoFactory(getContentResolver());
+            String apiKey = getString(R.string.config_google_maps_key);
+            DaoFactory daoFactory = new BaseDaoFactory(getContentResolver(), apiKey);
             final TransactionBusiness transactionBusiness = new TransactionBusiness(daoFactory);
             final double transactionAmount = transactionBusiness.getTransactionAmount();
 
