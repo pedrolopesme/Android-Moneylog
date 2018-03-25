@@ -7,4 +7,6 @@ public interface DaoFactory {
 
     TransactionDao getTransactionDao();
 
+    PlaceSuggestionDao getPlaceSuggestionDao();
+
 }
