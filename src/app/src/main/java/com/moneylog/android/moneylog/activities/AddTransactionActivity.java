@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +32,6 @@ import timber.log.Timber;
 import widgets.MoneyLogWidgetService;
 
 public class AddTransactionActivity extends AppCompatActivity {
-
 
     @BindView(R.id.btn_add_transaction)
     Button mBtnAddTransaction;
@@ -82,7 +83,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (fragment != null && fragment.saveTransaction()) {
-                    onBackPressed();
+                    setResult(MainActivity.FORM_SAVED);
+                    finish();
                 }
             }
         });

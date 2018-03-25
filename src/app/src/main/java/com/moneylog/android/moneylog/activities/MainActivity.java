@@ -3,7 +3,9 @@ package com.moneylog.android.moneylog.activities;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
 
     @BindView(R.id.fab_add_transaction)
     FloatingActionButton addTransaction;
+
+    @BindView(R.id.main_coordinator_layout)
+    CoordinatorLayout rootLayout;
+
+    public static final int FORM_SAVED = 500;
 
 
     @Override
@@ -81,9 +88,21 @@ public class MainActivity extends AppCompatActivity implements TransactionListCh
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, FORM_SAVED);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        switch (requestCode) {
+            case FORM_SAVED:
+                if (resultCode == FORM_SAVED) {
+                    Snackbar snackbar = Snackbar
+                            .make(rootLayout, "Transaction saved successfully!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+        }
     }
 
     /**
