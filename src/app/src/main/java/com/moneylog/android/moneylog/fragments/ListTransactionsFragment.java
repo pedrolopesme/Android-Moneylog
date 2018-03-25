@@ -76,6 +76,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
         mTransactionsRecyclerView.setLayoutManager(layoutManager);
         mTransactionsRecyclerView.setHasFixedSize(false);
         mTransactionsRecyclerView.setAdapter(mTransactionRecyclerViewAdapter);
+        mTransactionsRecyclerView.setNestedScrollingEnabled(false);
         refreshTransactionList();
         return view;
     }
