@@ -11,6 +11,7 @@ import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.activities.AddTransactionActivity;
 import com.moneylog.android.moneylog.utils.DateUtil;
+import com.moneylog.android.moneylog.utils.NumberUtil;
 
 import java.util.Date;
 
@@ -47,7 +48,7 @@ public class MoneyLogWidgetProvider extends AppWidgetProvider {
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_money_log);
 
-            views.setTextViewText(R.id.widget_balance, String.format("$ %s", balance));
+            views.setTextViewText(R.id.widget_balance, String.format("$ %s", NumberUtil.stringify(balance)));
             views.setTextViewText(R.id.widget_date, DateUtil.format(new Date(), "MMM - YYYY"));
 
             // Setting up click event
