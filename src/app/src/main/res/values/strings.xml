@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">MoneyLog</string>
+
+    <string name="content_authority">com.moneylog.android.moneylog</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_transaction">Transaction</string>
+    <string name="tv_amount">$</string>
+    <string name="tv_place">Place</string>
+    <string name="remove_transaction">Remove Transaction</string>
+    <string name="btn_save">SAVE</string>
+    <string name="error_required">Required</string>
+    <string name="balance_positive">Congratulations, your account turned green!</string>
+    <string name="balance_negative">Ooops.. your account turned red.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="widget_plus">+</string>
+    <string name="suggestions_title">PLACE SUGGESTIONS</string>
+    <string name="connected">Good! Connected to Internet</string>
+    <string name="no_connection">Sorry! Internet connection lost</string>
+
+    <!-- GOOGLE MAPS API KEY.
+     PS: SENSITIVE DATA, DO NOT COMMIT IT IN A PUBLIC REPO -->
+    <string name="config_google_maps_key">ENTER YOUR KEY HERE</string>
+
+    <!-- GOOGLE PLACES API KEY.
+    PS: SENSITIVE DATA, DO NOT COMMIT IT IN A PUBLIC REPO -->
+    <string name="config_google_places_key">ENTER YOUR KEY HERE</string>
+
+</resources>

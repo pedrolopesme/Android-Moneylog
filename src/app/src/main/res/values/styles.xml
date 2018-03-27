@@ -1,0 +1,111 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="AppTheme.Toolbar.TitleTextExpanded" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Toolbar.TitleTextCollapsed" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:paddingRight">80sp</item>
+    </style>
+
+    <style name="FabStyle">
+        <item name="android:src">@android:drawable/ic_input_add</item>
+        <item name="android:tint">@android:color/white</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">@dimen/fab_elevation</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+        <item name="android:elevation">@dimen/fab_elevation</item>
+    </style>
+
+    <style name="ToolbarAccountDate">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="ToolbarAccountBalance">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="TransactionItemName">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="TransactionItemAmount">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="TransactionItemDate">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/description</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="ToolbarAddTransaction">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:textColor">@color/appBarText</item>
+    </style>
+
+    <style name="WidgetBtn">
+        <item name="android:textSize">25dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/widget_text</item>
+        <item name="android:background">@drawable/bg_widget_btn</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+
+    <style name="WidgetAccountDate">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/widget_text</item>
+    </style>
+
+    <style name="WidgetAccountBalance">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/widget_text</item>
+    </style>
+
+    <style name="PlaceSuggestionTitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/description</item>
+    </style>
+
+    <style name="PlaceSuggestionItem">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:padding">6dp</item>
+    </style>
+
+</resources>
