@@ -38,7 +38,7 @@ public class TransactionBusiness extends BaseBusiness {
      * Inserts a transaction. It changes tx amount value according to its type.
      * Also, send a notification to a user if his account status change (Negative <-> Positive)
      *
-     * @param transaction
+     * @param transaction value
      */
     public void insertAndNotifyStatusChanging(final Transaction transaction,
                                               Context context, Class<?> activity,
@@ -59,7 +59,7 @@ public class TransactionBusiness extends BaseBusiness {
     /**
      * Removes a transaction
      *
-     * @param transactionId
+     * @param transactionId value
      */
     public void delete(final long transactionId) {
         final TransactionDao transactionDao = daoFactory.getTransactionDao();
@@ -69,7 +69,7 @@ public class TransactionBusiness extends BaseBusiness {
     /**
      * Get all transactions
      *
-     * @return
+     * @return list of transactions
      */
     public List<Transaction> getTransactions() {
         final TransactionDao transactionDao = daoFactory.getTransactionDao();
@@ -79,11 +79,9 @@ public class TransactionBusiness extends BaseBusiness {
     /**
      * Get all transactions value
      *
-     * @return
+     * @return double amount
      */
     public double getTransactionAmount() {
-        final TransactionDao transactionDao = daoFactory.getTransactionDao();
-
         double amount = 0.0;
         for (Transaction tx : getTransactions())
             amount += tx.getAmount();

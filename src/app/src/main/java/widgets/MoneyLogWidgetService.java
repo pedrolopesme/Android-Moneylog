@@ -35,7 +35,7 @@ public class MoneyLogWidgetService extends IntentService {
         Timber.i("Running on handle intent");
         if (intent != null) {
             final String action = intent.getAction();
-            if (action.equals(ACTION_UPDATE_BALANCE_WIDGET)) {
+            if (action != null && action.equals(ACTION_UPDATE_BALANCE_WIDGET)) {
                 handleUpdateBalanceAction();
             }
         }
@@ -53,7 +53,6 @@ public class MoneyLogWidgetService extends IntentService {
      */
     private void handleUpdateBalanceAction() {
         Timber.i("Handling update balance action");
-        final Cursor cursor = null;
         try {
             String apiKey = getString(R.string.config_google_maps_key);
             DaoFactory daoFactory = new BaseDaoFactory(getContentResolver(), apiKey);
@@ -66,10 +65,6 @@ public class MoneyLogWidgetService extends IntentService {
         } catch (Exception ex) {
             Timber.e("Something went bad while trying to update account balance action");
             Timber.e(ex);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
     }
 

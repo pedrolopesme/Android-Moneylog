@@ -5,7 +5,7 @@ public enum TransactionType {
 
     INCOME("Income"), DEBT("Debt");
 
-    private String type;
+    private final String type;
 
     TransactionType(String type) {
         this.type = type;

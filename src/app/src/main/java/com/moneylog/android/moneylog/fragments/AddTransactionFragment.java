@@ -51,41 +51,41 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
     private TransactionBusiness transactionBusiness;
 
     @BindView(R.id.tv_transaction_layout)
-    TextInputLayout mTvTransactionNameLayout;
+    protected TextInputLayout mTvTransactionNameLayout;
 
     @BindView(R.id.tv_transaction)
-    TextInputEditText mTvTransactionName;
+    protected TextInputEditText mTvTransactionName;
 
     @BindView(R.id.tv_amount_layout)
-    TextInputLayout mTvAmountLayout;
+    protected TextInputLayout mTvAmountLayout;
 
     @BindView(R.id.tv_amount)
-    TextInputEditText mTvAmount;
+    protected TextInputEditText mTvAmount;
 
     @BindView(R.id.tv_place)
-    TextInputEditText mTvPlace;
+    protected TextInputEditText mTvPlace;
 
     @BindView(R.id.ms_transaction_type)
-    MaterialSpinner mTransactionType;
+    protected MaterialSpinner mTransactionType;
 
     @BindView(R.id.transaction_map)
-    MapView mMapView;
+    protected MapView mMapView;
 
     @BindView(R.id.transaction_suggestions_list)
-    ListView mSuggestionsList;
+    protected ListView mSuggestionsList;
 
     @BindView(R.id.transaction_suggestions_list_wrapper)
-    LinearLayout mSuggestionsListWrapper;
+    protected LinearLayout mSuggestionsListWrapper;
 
-    private GoogleMap googleMap;
+    protected GoogleMap googleMap;
 
-    private TransactionType selectedTxType = TransactionType.DEBT;
+    protected TransactionType selectedTxType = TransactionType.DEBT;
 
-    private TransactionLocation transactionLocation = null;
+    protected TransactionLocation transactionLocation = null;
 
-    private DaoFactory daoFactory;
+    protected DaoFactory daoFactory;
 
-    private TextWatcher tvPlacesWatcher = new TextWatcher() {
+    private final TextWatcher tvPlacesWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -165,16 +165,6 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
         });
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     public boolean saveTransaction() {
         try {
             Timber.i("Trying to save transaction");
@@ -195,7 +185,7 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
         return false;
     }
 
-    public boolean validate() {
+    private boolean validate() {
 
         boolean validated = true;
 
@@ -212,7 +202,7 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
         return validated;
     }
 
-    public Transaction buildTransaction() {
+    private Transaction buildTransaction() {
         Transaction tx = null;
         try {
             Timber.i("Building transaction");
@@ -292,7 +282,7 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
         mTvPlace.removeTextChangedListener(tvPlacesWatcher);
     }
 
-    public void refreshPlaceSuggestions(String query) {
+    private void refreshPlaceSuggestions(String query) {
         Timber.d("Refreshing place suggestions with %s ", query);
         mSuggestionsListWrapper.setVisibility(View.GONE);
 

@@ -37,7 +37,8 @@ public class NotificationUtil {
 
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, b.build());
+        if (notificationManager != null)
+            notificationManager.notify(1, b.build());
 
     }
 

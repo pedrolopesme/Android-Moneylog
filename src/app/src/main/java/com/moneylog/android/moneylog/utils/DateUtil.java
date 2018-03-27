@@ -11,20 +11,6 @@ import java.util.Locale;
 public class DateUtil {
 
     /**
-     * Parses a string into a date object
-     *
-     * @param dt     date
-     * @param format to apply
-     * @return date
-     * @throws ParseException error
-     */
-    public static Date parse(final String dt, final String format) throws ParseException {
-        if (dt != null && format != null)
-            return new SimpleDateFormat(format, Locale.US).parse(dt);
-        return null;
-    }
-
-    /**
      * Transforms a Date object into it's string representation
      *
      * @param dt     object

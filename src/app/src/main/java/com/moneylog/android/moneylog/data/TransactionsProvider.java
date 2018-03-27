@@ -3,6 +3,7 @@ package com.moneylog.android.moneylog.data;
 import android.annotation.TargetApi;
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -79,7 +80,10 @@ public class TransactionsProvider extends ContentProvider{
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        final Context context = getContext();
+        if(context != null)
+            cursor.setNotificationUri(context.getContentResolver(), uri);
+
         return cursor;
     }
 
@@ -134,7 +138,10 @@ public class TransactionsProvider extends ContentProvider{
         }
 
         if (numRowsDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+
+            final Context context = getContext();
+            if(context != null)
+                context.getContentResolver().notifyChange(uri, null);
         }
 
         return numRowsDeleted;
@@ -162,7 +169,9 @@ public class TransactionsProvider extends ContentProvider{
 
         /* If we actually deleted any rows, notify that a change has occurred to this URI */
         if (numRowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            final Context context = getContext();
+            if(context != null)
+                context.getContentResolver().notifyChange(uri, null);
         }
 
         return numRowsUpdated;

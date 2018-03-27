@@ -19,7 +19,7 @@ public class PermissionsUtils {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-                // Show some message to user explaining why I'm getting his location
+                // TODO: Show some message to user explaining why I'm getting his location
 
             } else {
                 ActivityCompat.requestPermissions(activity,

@@ -5,9 +5,9 @@ package com.moneylog.android.moneylog.domain;
  */
 public class PlaceSuggestionSearch {
 
-    private String query;
-    private double latitude;
-    private double longitude;
+    private final String query;
+    private final double latitude;
+    private final double longitude;
 
     public PlaceSuggestionSearch(String query, double latitude, double longitude) {
         this.query = query;

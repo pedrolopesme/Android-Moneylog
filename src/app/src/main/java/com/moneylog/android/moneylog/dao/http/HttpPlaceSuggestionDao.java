@@ -18,7 +18,7 @@ import timber.log.Timber;
  */
 public class HttpPlaceSuggestionDao extends HttpBaseDao implements PlaceSuggestionDao {
 
-    private static int DEFAULT_RADIUS = 5000; // 5km
+    private static final int DEFAULT_RADIUS = 5000; // 5km
 
     public HttpPlaceSuggestionDao(String apiKey) {
         super(apiKey);

@@ -27,14 +27,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class AddTransactionActivity extends BaseActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
+public class AddTransactionActivity extends BaseActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     @BindView(R.id.btn_add_transaction)
-    Button mBtnAddTransaction;
-
+    protected Button mBtnAddTransaction;
 
     @BindView(R.id.add_transaction_coordinator_layout)
-    CoordinatorLayout rootLayout;
+    protected CoordinatorLayout rootLayout;
 
     private AddTransactionFragment fragment;
 
@@ -99,7 +98,7 @@ public class AddTransactionActivity extends BaseActivity implements Connectivity
         return true;
     }
 
-    public void getUserLocation() {
+    private void getUserLocation() {
         if (PermissionsUtils.checkLocationPermission(this)) {
             mFusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -113,7 +112,7 @@ public class AddTransactionActivity extends BaseActivity implements Connectivity
         }
     }
 
-    public void setLocation(Location location) {
+    private void setLocation(Location location) {
         Timber.i("Location registered %s", location);
         if (location != null) {
             TransactionLocation txLocation = new TransactionLocation();

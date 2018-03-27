@@ -1,7 +1,6 @@
 package com.moneylog.android.moneylog.fragments;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.adapters.TransactionRecyclerViewAdapter;
-import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
@@ -82,16 +80,6 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void onTransactionItemClick(Transaction transaction) {
         Timber.i("Item clicked %s", transaction);
     }
@@ -117,10 +105,6 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
         final TransactionDao transactionDao = daoFactory.getTransactionDao();
         final List<Transaction> transactions = transactionDao.getTransactions();
         mTransactionRecyclerViewAdapter.setTransactions(transactions);
-    }
-
-    public TransactionListChangedClickListener getListChangedClickListener() {
-        return listChangedClickListener;
     }
 
     public void setListChangedClickListener(TransactionListChangedClickListener listChangedClickListener) {
