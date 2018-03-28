@@ -28,7 +28,7 @@ The *Capstone_Stage1.pdf* file is located under _/docs_ dir.
 
 | Phone - Transactions | Phone - Add Transaction |
 |---|---|
-| ![Phone - Transactions](mocks/screenshots/phone_transactions.png) | ![Phone - Add Transaction](mocks/screenshots/phone_add_tx.png) |
+| ![Phone - Transactions](mocks/screenshots/phone_tx.png) | ![Phone - Add Transaction](mocks/screenshots/phone_add_tx.png) |
 
 | Tablet - Transactions | 
 |---|
