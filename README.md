@@ -26,6 +26,22 @@ The *Capstone_Stage1.pdf* file is located under _/docs_ dir.
 
 ### Screenshots
 
-| Main | Phone - Transactions |
+| Phone - Transactions | Phone - Add Transaction |
 |---|---|
-| ![Main Activity](mocks/phone_transactions.png) | ![Phone - Transactions](mocks/phone_transactions.png) |
+| ![Phone - Transactions](mocks/screenshots/phone_transactions.png) | ![Phone - Add Transaction](mocks/screenshots/phone_add_tx.png) |
+
+| Tablet - Transactions | 
+|---|
+| ![Tablet Transactions](mocks/screenshots/tablet_transactions.png) | 
+
+| Tablet - Add Transaction | 
+|---|
+| ![Tablet Add Transaction](mocks/screenshots/tablet_add_tx.png) | 
+
+| Notification | Home Screen Widget |
+|---|---|
+| ![Notification](mocks/screenshots/app_notification.png) | ![Home Screen Widget](mocks/screenshots/widget_preview.png) |
+
+| Google Places Suggestions |
+|---|
+| ![Google Places Suggestions](mocks/screenshots/google_suggestions.png) |
