@@ -1,11 +1,12 @@
 package com.moneylog.android.moneylog.fragments;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.activities.MainActivity;
-import com.moneylog.android.moneylog.asyncTasks.PlaceSuggestionsAsyncTask;
+import com.moneylog.android.moneylog.asyncTasks.PlaceSuggestionsAsyncTaskLoader;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.DaoFactory;
@@ -37,6 +38,7 @@ import com.moneylog.android.moneylog.domain.Transaction;
 import com.moneylog.android.moneylog.domain.TransactionLocation;
 import com.moneylog.android.moneylog.domain.TransactionType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,7 +48,7 @@ import timber.log.Timber;
 /**
  * Add Transaction Fragment
  */
-public class AddTransactionFragment extends Fragment implements PlaceSuggestionsFragment {
+public class AddTransactionFragment extends Fragment {
 
     private TransactionBusiness transactionBusiness;
 
@@ -100,6 +102,32 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
             refreshPlaceSuggestions(s.toString());
         }
     };
+
+    private static final int SUGGESTIONS_LOADER_INDEX = 300;
+    private static final String SUGGESTIONS_PARCELABLE_KEY = "suggestionParcelable";
+
+    private LoaderManager.LoaderCallbacks<List<String>>
+            suggestionsLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<String>>() {
+                @Override
+                public Loader<List<String>> onCreateLoader(
+                        int id, Bundle args) {
+
+                    PlaceSuggestionSearch placeSuggestionSearch = args.getParcelable(SUGGESTIONS_PARCELABLE_KEY);
+                    return new PlaceSuggestionsAsyncTaskLoader(getContext(), daoFactory, placeSuggestionSearch);
+                }
+
+                @Override
+                public void onLoadFinished(
+                        Loader<List<String>> loader, List<String> data) {
+                    renderPlaceSuggestions(data);
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<String>> loader) {
+                    renderPlaceSuggestions(new ArrayList<String>());
+                }
+            };
 
     public AddTransactionFragment() {
     }
@@ -291,11 +319,21 @@ public class AddTransactionFragment extends Fragment implements PlaceSuggestions
                     transactionLocation.getLatitude(),
                     transactionLocation.getLongitude());
 
-            new PlaceSuggestionsAsyncTask(this, daoFactory).execute(search);
+
+            Bundle queryBundle = new Bundle();
+            queryBundle.putParcelable(SUGGESTIONS_PARCELABLE_KEY, search);
+
+            LoaderManager loaderManager = getLoaderManager();
+            Loader<String> loader = loaderManager.getLoader(SUGGESTIONS_LOADER_INDEX);
+
+            if (loader == null) {
+                loaderManager.initLoader(SUGGESTIONS_LOADER_INDEX, queryBundle, suggestionsLoaderCallbacks);
+            } else {
+                loaderManager.restartLoader(SUGGESTIONS_LOADER_INDEX, queryBundle, suggestionsLoaderCallbacks);
+            }
         }
     }
-
-    @Override
+    
     public void renderPlaceSuggestions(final List<String> suggestions) {
         Timber.d("Rendering place suggestions with %s ", suggestions);
 

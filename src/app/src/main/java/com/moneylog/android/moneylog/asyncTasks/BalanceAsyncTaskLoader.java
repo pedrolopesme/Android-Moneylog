@@ -37,7 +37,8 @@ public class BalanceAsyncTaskLoader extends AsyncTaskLoader<Double> {
     }
 
     @Override
-    public void deliverResult(Double transactions) {
-        super.deliverResult(transactions);
+    public void deliverResult(Double balance) {
+        this.balance = balance;
+        super.deliverResult(balance);
     }
 }

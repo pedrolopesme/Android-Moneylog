@@ -38,6 +38,7 @@ public class TransactionsAsyncTaskLoader extends AsyncTaskLoader<List<Transactio
 
     @Override
     public void deliverResult(List<Transaction> transactions) {
+        this.transactions = transactions;
         super.deliverResult(transactions);
     }
 }
