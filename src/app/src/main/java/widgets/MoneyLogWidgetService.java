@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.annotation.Nullable;
 
 import com.moneylog.android.moneylog.BuildConfig;
@@ -57,7 +56,7 @@ public class MoneyLogWidgetService extends IntentService {
             String apiKey = getString(R.string.config_google_maps_key);
             DaoFactory daoFactory = new BaseDaoFactory(getContentResolver(), apiKey);
             final TransactionBusiness transactionBusiness = new TransactionBusiness(daoFactory);
-            final double transactionAmount = transactionBusiness.getTransactionAmount();
+            final double transactionAmount = transactionBusiness.getBalance();
 
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             int[] appWidgetIds = widgetManager.getAppWidgetIds(new ComponentName(this, MoneyLogWidgetProvider.class));

@@ -95,7 +95,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
 
         View view = inflater.inflate(R.layout.fragment_list_transactions, container, false);
         ButterKnife.bind(this, view);
-        
+
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mTransactionRecyclerViewAdapter = new TransactionRecyclerViewAdapter(getActivity().getApplicationContext(), this);
 

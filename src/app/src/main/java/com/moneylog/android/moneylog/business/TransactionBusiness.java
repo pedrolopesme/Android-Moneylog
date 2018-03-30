@@ -44,9 +44,9 @@ public class TransactionBusiness extends BaseBusiness {
                                               Context context, Class<?> activity,
                                               String positiveMessage,
                                               String negativeMessage) {
-        final double transactionAmountBefore= getTransactionAmount();
+        final double transactionAmountBefore= getBalance();
         insert(transaction);
-        final double transactionAmountAfter = getTransactionAmount();
+        final double transactionAmountAfter = getBalance();
 
         if (transactionAmountBefore < 0 && transactionAmountAfter >= 0) {
             NotificationUtil.openNotification(context, activity, "Account balance changed", positiveMessage);
@@ -77,16 +77,16 @@ public class TransactionBusiness extends BaseBusiness {
     }
 
     /**
-     * Get all transactions value
+     * Get all transactions balance
      *
      * @return double amount
      */
-    public double getTransactionAmount() {
-        double amount = 0.0;
+    public double getBalance() {
+        double balance = 0.0;
         for (Transaction tx : getTransactions())
-            amount += tx.getAmount();
+            balance += tx.getAmount();
 
-        return amount;
+        return balance;
     }
 
 

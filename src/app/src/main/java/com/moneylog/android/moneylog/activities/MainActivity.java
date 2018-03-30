@@ -8,11 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.TextView;
 
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
+import com.moneylog.android.moneylog.asyncTasks.BalanceAsyncTaskLoader;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
@@ -34,8 +37,8 @@ public class MainActivity extends BaseActivity implements TransactionListChanged
     @BindView(R.id.tv_toolbar_date)
     TextView tvToolbarDate;
 
-    @BindView(R.id.tv_toolbar_account_summary)
-    TextView tvToolbarAccountSummary;
+    @BindView(R.id.tv_toolbar_account_balance)
+    TextView tvToolbarAccountBalance;
 
     @BindView(R.id.fab_add_transaction)
     FloatingActionButton addTransaction;
@@ -44,6 +47,30 @@ public class MainActivity extends BaseActivity implements TransactionListChanged
     CoordinatorLayout rootLayout;
 
     public static final int FORM_SAVED = 500;
+
+    // Transaction Loader ID
+    private static final int BALANCE_LOADER_INDEX = 200;
+
+    // Transaction Loader Callbacks
+    private LoaderManager.LoaderCallbacks<Double>
+            balanceLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<Double>() {
+
+                @Override
+                public Loader<Double> onCreateLoader(int id, Bundle args) {
+                    return new BalanceAsyncTaskLoader(getApplicationContext(), transactionBusiness);
+                }
+
+                @Override
+                public void onLoadFinished(Loader<Double> loader, Double data) {
+                    tvToolbarAccountBalance.setText(String.format("$ %s", NumberUtil.stringify(data)));
+                }
+
+                @Override
+                public void onLoaderReset(Loader<Double> loader) {
+                    tvToolbarAccountBalance.setText(String.format("$ %s", NumberUtil.stringify(0.0)));
+                }
+            };
 
 
     @Override
@@ -59,6 +86,7 @@ public class MainActivity extends BaseActivity implements TransactionListChanged
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        getSupportLoaderManager().initLoader(BALANCE_LOADER_INDEX, null, balanceLoaderCallbacks);
         createFragment();
         setAddTransactionOnClick();
         renderToolbar();
@@ -107,9 +135,8 @@ public class MainActivity extends BaseActivity implements TransactionListChanged
      * Render toolbar
      */
     private void renderToolbar() {
-        final double transactionsAmount = transactionBusiness.getTransactionAmount();
         tvToolbarDate.setText(DateUtil.format(new Date(), "MMM - YYYY"));
-        tvToolbarAccountSummary.setText(String.format("$ %s", NumberUtil.stringify(transactionsAmount)));
+        getSupportLoaderManager().restartLoader(BALANCE_LOADER_INDEX, null, balanceLoaderCallbacks);
     }
 
 
