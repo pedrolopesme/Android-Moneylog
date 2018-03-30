@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.adapters.TransactionRecyclerViewAdapter;
-import com.moneylog.android.moneylog.asyncTasks.TransactionsAsyncTaskLoader;
+import com.moneylog.android.moneylog.loaders.TransactionsAsyncTaskLoader;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;

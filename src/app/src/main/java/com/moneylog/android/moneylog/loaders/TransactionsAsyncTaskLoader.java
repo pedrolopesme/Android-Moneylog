@@ -1,4 +1,4 @@
-package com.moneylog.android.moneylog.asyncTasks;
+package com.moneylog.android.moneylog.loaders;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;

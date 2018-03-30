@@ -29,7 +29,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.activities.MainActivity;
-import com.moneylog.android.moneylog.asyncTasks.PlaceSuggestionsAsyncTaskLoader;
+import com.moneylog.android.moneylog.loaders.PlaceSuggestionsAsyncTaskLoader;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
 import com.moneylog.android.moneylog.dao.DaoFactory;
@@ -333,7 +333,7 @@ public class AddTransactionFragment extends Fragment {
             }
         }
     }
-    
+
     public void renderPlaceSuggestions(final List<String> suggestions) {
         Timber.d("Rendering place suggestions with %s ", suggestions);
 

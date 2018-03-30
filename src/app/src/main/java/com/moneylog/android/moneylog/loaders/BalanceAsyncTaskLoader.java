@@ -1,12 +1,9 @@
-package com.moneylog.android.moneylog.asyncTasks;
+package com.moneylog.android.moneylog.loaders;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.moneylog.android.moneylog.business.TransactionBusiness;
-import com.moneylog.android.moneylog.domain.Transaction;
-
-import java.util.List;
 
 /**
  * Balance Async Task Loader

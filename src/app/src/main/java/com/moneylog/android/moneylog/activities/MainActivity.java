@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
-import com.moneylog.android.moneylog.asyncTasks.BalanceAsyncTaskLoader;
+import com.moneylog.android.moneylog.loaders.BalanceAsyncTaskLoader;
 import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
