@@ -3,7 +3,7 @@ package com.moneylog.android.moneylog.asyncTasks;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.moneylog.android.moneylog.dao.DaoFactory;
+import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.domain.Transaction;
 
 import java.util.List;
@@ -15,11 +15,11 @@ public class TransactionsAsyncTaskLoader extends AsyncTaskLoader<List<Transactio
 
     private List<Transaction> transactions;
 
-    private DaoFactory daoFactory;
+    private TransactionBusiness transactionBusiness;
 
-    public TransactionsAsyncTaskLoader(Context context, DaoFactory daoFactory) {
+    public TransactionsAsyncTaskLoader(Context context, TransactionBusiness transactionBusiness) {
         super(context);
-        this.daoFactory = daoFactory;
+        this.transactionBusiness = transactionBusiness;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class TransactionsAsyncTaskLoader extends AsyncTaskLoader<List<Transactio
 
     @Override
     public List<Transaction> loadInBackground() {
-        return daoFactory.getTransactionDao().getTransactions();
+        return transactionBusiness.getTransactions();
     }
 
     @Override

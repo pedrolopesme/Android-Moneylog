@@ -15,10 +15,11 @@ import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.adapters.TransactionRecyclerViewAdapter;
 import com.moneylog.android.moneylog.asyncTasks.TransactionsAsyncTaskLoader;
+import com.moneylog.android.moneylog.business.TransactionBusiness;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
-import com.moneylog.android.moneylog.dao.TransactionDao;
+import com.moneylog.android.moneylog.dao.DaoFactory;
 import com.moneylog.android.moneylog.domain.Transaction;
 
 import java.util.List;
@@ -32,7 +33,7 @@ import timber.log.Timber;
 public class ListTransactionsFragment extends Fragment implements TransactionItemClickListener {
 
     // DAO Factory
-    private BaseDaoFactory daoFactory;
+    private TransactionBusiness transactionBusiness;
 
     // Transactions Recycler View Adapter
     private TransactionRecyclerViewAdapter mTransactionRecyclerViewAdapter;
@@ -53,7 +54,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
                 @Override
                 public Loader<List<Transaction>> onCreateLoader(
                         int id, Bundle args) {
-                    return new TransactionsAsyncTaskLoader(getContext(), daoFactory);
+                    return new TransactionsAsyncTaskLoader(getContext(), transactionBusiness);
                 }
 
                 @Override
@@ -77,7 +78,8 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
 
         ContentResolver contentResolver = getActivity().getApplicationContext().getContentResolver();
         String apiKey = getString(R.string.config_google_maps_key);
-        daoFactory = new BaseDaoFactory(contentResolver, apiKey);
+        DaoFactory daoFactory = new BaseDaoFactory(contentResolver, apiKey);
+        transactionBusiness = new TransactionBusiness(daoFactory);
 
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
@@ -93,8 +95,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
 
         View view = inflater.inflate(R.layout.fragment_list_transactions, container, false);
         ButterKnife.bind(this, view);
-
-
+        
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mTransactionRecyclerViewAdapter = new TransactionRecyclerViewAdapter(getActivity().getApplicationContext(), this);
 
@@ -117,8 +118,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
     public void onTransactionItemDeleteClick(Transaction transaction) {
         if (transaction != null) {
             Timber.i("Deleting transaction %s", transaction);
-            final TransactionDao transactionDao = daoFactory.getTransactionDao();
-            transactionDao.delete(transaction.getId());
+            transactionBusiness.delete(transaction.getId());
             refreshTransactionList();
 
             if (listChangedClickListener != null)
