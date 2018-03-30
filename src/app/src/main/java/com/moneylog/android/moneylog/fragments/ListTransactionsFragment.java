@@ -3,6 +3,8 @@ package com.moneylog.android.moneylog.fragments;
 import android.content.ContentResolver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import com.moneylog.android.moneylog.BuildConfig;
 import com.moneylog.android.moneylog.R;
 import com.moneylog.android.moneylog.adapters.TransactionRecyclerViewAdapter;
+import com.moneylog.android.moneylog.asyncTasks.TransactionsAsyncTaskLoader;
 import com.moneylog.android.moneylog.clickListener.TransactionItemClickListener;
 import com.moneylog.android.moneylog.clickListener.TransactionListChangedClickListener;
 import com.moneylog.android.moneylog.dao.BaseDaoFactory;
@@ -37,10 +40,35 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
     // Layout manager
     private LinearLayoutManager layoutManager;
 
+    // List changes listener
     private TransactionListChangedClickListener listChangedClickListener;
 
-    public ListTransactionsFragment() {
+    // Transaction Loader ID
+    private static final int TRANSACTION_LOADER_INDEX = 100;
 
+    // Transaction Loader Callbacks
+    private LoaderManager.LoaderCallbacks<List<Transaction>>
+            transactionLoaderCallbacks =
+            new LoaderManager.LoaderCallbacks<List<Transaction>>() {
+                @Override
+                public Loader<List<Transaction>> onCreateLoader(
+                        int id, Bundle args) {
+                    return new TransactionsAsyncTaskLoader(getContext(), daoFactory);
+                }
+
+                @Override
+                public void onLoadFinished(
+                        Loader<List<Transaction>> loader, List<Transaction> data) {
+                    mTransactionRecyclerViewAdapter.setTransactions(data);
+                }
+
+                @Override
+                public void onLoaderReset(Loader<List<Transaction>> loader) {
+                    mTransactionRecyclerViewAdapter.setTransactions(null);
+                }
+            };
+
+    public ListTransactionsFragment() {
     }
 
     @Override
@@ -75,7 +103,8 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
         mTransactionsRecyclerView.setHasFixedSize(false);
         mTransactionsRecyclerView.setAdapter(mTransactionRecyclerViewAdapter);
         mTransactionsRecyclerView.setNestedScrollingEnabled(false);
-        refreshTransactionList();
+
+        getLoaderManager().initLoader(TRANSACTION_LOADER_INDEX, null, transactionLoaderCallbacks);
         return view;
     }
 
@@ -102,9 +131,7 @@ public class ListTransactionsFragment extends Fragment implements TransactionIte
      */
     private void refreshTransactionList() {
         Timber.i("Refreshing transaction list");
-        final TransactionDao transactionDao = daoFactory.getTransactionDao();
-        final List<Transaction> transactions = transactionDao.getTransactions();
-        mTransactionRecyclerViewAdapter.setTransactions(transactions);
+        getLoaderManager().restartLoader(TRANSACTION_LOADER_INDEX, null, transactionLoaderCallbacks);
     }
 
     public void setListChangedClickListener(TransactionListChangedClickListener listChangedClickListener) {
