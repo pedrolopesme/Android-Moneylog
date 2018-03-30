@@ -5,6 +5,14 @@ repositories {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'MoneyLogKey'
+            keyPassword 'manager'
+            storeFile file('/Users/pedrolopesme/Documents/Keystores/moneylog')
+            storePassword 'manager'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
@@ -19,12 +27,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -33,7 +42,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.jakewharton.timber:timber:4.6.1'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2')
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.0') {
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
@@ -41,10 +50,10 @@ dependencies {
     }
     compile 'com.android.support:recyclerview-v7:25.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.android.support:design:25.4.0"
-    compile "com.google.android.gms:play-services-location:11.8.0"
-    compile "com.google.android.gms:play-services-maps:11.8.0"
-    compile "com.google.android.gms:play-services-places:11.8.0"
+    compile 'com.android.support:design:25.4.0'
+    compile 'com.google.android.gms:play-services-location:11.8.0'
+    compile 'com.google.android.gms:play-services-maps:11.8.0'
+    compile 'com.google.android.gms:play-services-places:11.8.0'
     compile 'com.jaredrummler:material-spinner:1.2.4'
     androidTestCompile 'junit:junit:4.12'
 }
