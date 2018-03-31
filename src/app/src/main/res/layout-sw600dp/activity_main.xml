@@ -71,8 +71,8 @@
             android:id="@+id/list_transactions_fragment"
             android:layout_width="600dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical" />
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -82,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/add_a_transaction"
         android:theme="@style/FabStyle" />
 
 </android.support.design.widget.CoordinatorLayout>
