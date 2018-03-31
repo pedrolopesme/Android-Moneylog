@@ -129,8 +129,6 @@ public class AddTransactionFragment extends Fragment {
                 }
             };
 
-    public AddTransactionFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
