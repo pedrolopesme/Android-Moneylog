@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity implements TransactionListChanged
             case FORM_SAVED:
                 if (resultCode == FORM_SAVED) {
                     Snackbar snackbar = Snackbar
-                            .make(rootLayout, "Transaction saved successfully!", Snackbar.LENGTH_LONG);
+                            .make(rootLayout, R.string.transaction_saved, Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
         }
