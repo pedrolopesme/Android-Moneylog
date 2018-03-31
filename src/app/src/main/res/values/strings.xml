@@ -17,6 +17,8 @@
     <string name="suggestions_title">PLACE SUGGESTIONS</string>
     <string name="connected">Good! Connected to Internet</string>
     <string name="no_connection">Sorry! Internet connection lost</string>
+    <string name="add_a_transaction">Add a Transaction</string>
+    <string name="transaction_saved">Transaction saved successfully!</string>
 
     <!-- GOOGLE MAPS API KEY.
      PS: SENSITIVE DATA, DO NOT COMMIT IT IN A PUBLIC REPO -->
