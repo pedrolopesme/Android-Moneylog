@@ -49,7 +49,7 @@ public class MoneyLogWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_money_log);
 
             views.setTextViewText(R.id.widget_balance, String.format("$ %s", NumberUtil.stringify(balance)));
-            views.setTextViewText(R.id.widget_date, DateUtil.format(new Date(), "MMM - YYYY"));
+            views.setTextViewText(R.id.widget_date, DateUtil.format(new Date(), "MMM - yyyy"));
 
             // Setting up click event
             Intent intent = new Intent(context, AddTransactionActivity.class);

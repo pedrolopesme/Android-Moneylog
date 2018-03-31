@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity implements TransactionListChanged
      * Render toolbar
      */
     private void renderToolbar() {
-        tvToolbarDate.setText(DateUtil.format(new Date(), "MMM - YYYY"));
+        tvToolbarDate.setText(DateUtil.format(new Date(), "MMM - yyyy"));
         getSupportLoaderManager().restartLoader(BALANCE_LOADER_INDEX, null, balanceLoaderCallbacks);
     }
 
