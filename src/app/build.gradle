@@ -9,7 +9,7 @@ android {
         config {
             keyAlias 'MoneyLogKey'
             keyPassword 'manager'
-            storeFile file('/Users/pedrolopesme/Documents/Keystores/moneylog')
+            storeFile file('./keystore/moneylog')
             storePassword 'manager'
         }
     }
